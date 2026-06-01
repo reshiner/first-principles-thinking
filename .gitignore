@@ -10,3 +10,6 @@
 # Temp files
 *.bak
 *.tmp
+
+# Project-local tracking (not part of distributed skill)
+TODO.md
