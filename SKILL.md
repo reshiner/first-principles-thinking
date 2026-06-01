@@ -1,9 +1,6 @@
 ---
 name: first-principles-plan
 description: "Use when the user requests code changes to existing code — adding features, extending functionality, changing behavior, or fixing bugs. Also triggers on phrases like '第一性原理', '从根本分析', '从零开始思考', '这个设计合理吗', 'challenge assumptions', 'question this design', 'is this the right approach'. Forces first-principles thinking: critically evaluate the existing design, design the ideal solution, then reconcile. Do NOT use for: trivial one-line changes, pure read/search tasks, or obvious-root-cause bug fixes."
-compatibility:
-  requires: [Read, Write, Edit, Bash]
-  dangerous: false
 ---
 
 # First Principles Plan
