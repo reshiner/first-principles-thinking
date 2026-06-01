@@ -1,6 +1,9 @@
 # First Principles Plan
 
-A [Claude Code](https://claude.ai/code) skill that breaks the "minimal change" bias in AI-assisted development. When AI agents modify existing code, they default to producing the smallest possible diff — which leads to accreted complexity, patched-over abstractions, and design debt. This skill forces a structured process:
+A multi-platform AI coding skill that breaks the "minimal change" bias in LLM-assisted development.  
+**Works with:** Claude Code · Codex CLI · OpenCode
+
+When AI agents modify existing code, they default to producing the smallest possible diff — which leads to accreted complexity, patched-over abstractions, and design debt. This skill forces a structured process:
 
 1. **Decompose** — understand the user's true intent, critically evaluate existing code for design debt
 2. **Design** — imagine the ideal solution from first principles, ignoring existing code
@@ -10,14 +13,14 @@ The skill does **not** always recommend refactoring. It makes the tradeoff **exp
 
 ## Features
 
-- **`/fpp` slash command** — manually trigger first-principles analysis
+- **`/fpp` slash command** (Claude Code) or equivalent trigger on other platforms
 - **Automatic trigger** — activates on phrases like "第一性原理", "challenge assumptions", "从根本分析", and non-trivial code modification requests
 - **Structured output** — produces a `First Principles Analysis` document with intent, critique, clean-sheet design, path comparison, and recommendation
 - **Decision framework** — 4 heuristics (touch frequency, provably wrong, Strangler Fig, compounding debt) to guide the recommendation
 
 ## Installation
 
-### Install
+### Core (all platforms)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-plan/main/install.sh | bash
@@ -29,15 +32,36 @@ Or clone manually:
 git clone https://github.com/reshiner/first-principles-plan.git ~/.agents/skills/first-principles-plan
 ```
 
-That's it. The skill is placed at `~/.agents/skills/first-principles-plan/`. Any agent tool that scans this directory will discover both the **SKILL.md** (for automatic triggering) and the **commands/fpp.md** (for the `/fpp` slash command, if supported).
+### Platform-specific setup
+
+After installing the core, set up your specific platform:
+
+**Claude Code:** Auto-discovered — no extra steps needed. The skill is loaded from `~/.agents/skills/` automatically. `/fpp` slash command is available via `adapters/claude/commands/fpp.md`.
+
+**Codex CLI:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-plan/main/install.sh | bash -s -- --codex
+```
+This creates a symlink at `~/.codex/skills/first-principles-plan/` pointing to `adapters/codex/`.
+
+**OpenCode:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-plan/main/install.sh | bash -s -- --opencode
+```
+This creates a symlink at `~/.opencode/skills/first-principles-plan/` pointing to `adapters/opencode/`.
+
+**All at once:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-plan/main/install.sh | bash -s -- --all
+```
 
 ## Usage
 
 ```
-# Manual trigger (stickler analysis):
+# Manual trigger (Claude Code):
 /fpp We need to add webhook support to the notification system
 
-# Or trigger via natural language:
+# Or trigger via natural language (any platform):
 用第一性原理分析一下这个现有的设计
 Think from first principles about adding this feature
 challenge assumptions in this codebase
@@ -61,11 +85,17 @@ The skill produces:
 
 ```
 ~/.agents/skills/first-principles-plan/     # Skill directory
-├── .claude-plugin/
-│   └── plugin.json                          # Plugin manifest
-├── SKILL.md                                 # Main skill definition
-├── commands/
-│   └── fpp.md                               # /fpp slash command
+├── SKILL.md                                 # Core methodology (platform-agnostic)
+├── adapters/                                # Platform-specific entry points
+│   ├── claude/
+│   │   ├── .claude-plugin/plugin.json       # Claude Code plugin manifest
+│   │   └── commands/fpp.md                  # /fpp slash command
+│   ├── codex/                               # Codex CLI agent definition
+│   │   └── fpp.agent.md
+│   └── opencode/                            # OpenCode rules
+│       └── fpp.opencode.md
+├── commands -> adapters/claude/commands     # Backward-compat symlink
+├── .claude-plugin -> adapters/claude/.claude-plugin
 ├── README.md                                # This file
 ├── LICENSE                                  # MIT License
 └── install.sh                               # Install script
