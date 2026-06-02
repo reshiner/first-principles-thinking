@@ -182,8 +182,9 @@ Evaluate the two paths using these heuristics:
 
 #### Step 4: Output Phase 3
 
-Write the final output as a structured document:
+Write the final output as a structured document. **Use the template below but localize all headers, table columns, and labels to match the user's language** (see Language Matching section above).
 
+English template (use when user input is English):
 ```markdown
 # First Principles Analysis: <Feature Name>
 
@@ -219,6 +220,45 @@ Write the final output as a structured document:
 <Rationale grounded in the decision framework above>
 <If refactoring: concrete migration steps, ideally as safe incremental commits>
 ```
+
+Chinese template (use when user input is Chinese):
+```markdown
+# First Principles Analysis: <功能名称>
+
+## 1. 意图（Intent）
+<用户核心目标的简要描述>
+
+## 2. 现有设计批判（Current Design Critique）
+<对现有代码的事实分析 — 耦合、内聚、边界问题、隐性假设>
+
+## 2b. 被挑战的假设（Assumptions Challenged）
+| 假设 | 类别 | 挑战 | 裁定 |
+|------|------|------|------|
+| <例如："必须用现有 ORM"> | 技术 | <为什么质疑它> | 保留/推翻/修改 |
+| <"用户只有一个角色"> | 业务 | <这是真的吗？> | 保留/推翻/修改 |
+
+## 3. 理想方案设计（Clean-Sheet Design）
+<理想方案长什么样。具体：接口、实体、数据流>
+
+## 4. 差距分析（Gap Analysis）
+| 维度 | 当前 | 理想 | 差距 |
+|------|------|------|------|
+
+## 5. 路径比较（Path Comparison）
+
+### Path A：最小修改（Minimal Modification）
+<需要改动什么，积累了什么设计债务>
+
+### Path B：第一性原理重构（First-Principles Refactor）
+<需要改动什么，风险和迁移成本>
+
+## 6. 推荐结论（Recommendation）
+**推荐：Path A | Path B | Hybrid**
+<基于决策框架的推理>
+<如果走重构路线：具体迁移步骤，最好是安全的增量提交>
+```
+
+For other languages, translate the English template headers accordingly.
 
 ---
 
