@@ -6,7 +6,7 @@ Claude Code 技能发现系统的入口。
 ## Files / 文件
 
 - `.claude-plugin/plugin.json` — Plugin manifest (name, description, author) / 插件清单
-- `commands/fpp.md` — `/fpp` slash command definition / 斜杠命令定义
+- `commands/fpt.md` — `/fpt` slash command definition / 斜杠命令定义
 
 ## Discovery / 发现机制
 

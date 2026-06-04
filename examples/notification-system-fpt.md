@@ -1,7 +1,7 @@
 # First Principles Analysis: 通知系统添加 Webhook 支持
 
 > **场景还原：** 现有通知系统通过 `NotificationService` 发送邮件和短信，团队需新增 Webhook 投递渠道。
-> 这是一个典型的「if-else 膨胀」案例，FPP 分析揭示了从简单修补到结构性改进的完整决策过程。
+> 这是一个典型的「if-else 膨胀」案例，FPT 分析揭示了从简单修补到结构性改进的完整决策过程。
 
 ## 1. 意图（Intent）
 

@@ -5,7 +5,7 @@ Each subdirectory provides the platform-specific entry point for the core `SKILL
 
 | Directory | Platform | Format | Install flag |
 |-----------|----------|--------|-------------|
-| `claude/` | Claude Code | `.claude-plugin/plugin.json` + `commands/fpp.md` | auto-discovered / 自动发现 |
+| `claude/` | Claude Code | `.claude-plugin/plugin.json` + `commands/fpt.md` | auto-discovered / 自动发现 |
 | `codex/` | Codex CLI | `.agent.md` | `--codex` |
 | `opencode/` | OpenCode | `.rule.md` | `--opencode` |
 

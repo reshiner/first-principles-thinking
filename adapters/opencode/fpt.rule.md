@@ -1,17 +1,17 @@
 ---
 # OpenCode rules format
 # Fields: name (required), description (required)
-name: first-principles-plan
-description: "Forces first-principles thinking for code changes — critically evaluate existing design, design the ideal solution, then reconcile. / 第一性原理分析 — 批判性评估现有设计，设计理想方案，做出权衡推荐。"
+name: first-principles-thinking
+description: "Forces first-principles thinking for code changes — critically evaluate existing design, design the ideal solution, then reconcile. / 第一性原理思考 — 批判性评估现有设计，设计理想方案，做出权衡推荐。"
 ---
 
-# First Principles Plan
+# First Principles Thinking
 
-> **OpenCode adapter** — This file provides the entry point for OpenCode (`~/.opencode/skills/first-principles-plan/`).
-> It delegates to the canonical methodology at `~/.agents/skills/first-principles-plan/SKILL.md`.
+> **OpenCode adapter** — This file provides the entry point for OpenCode (`~/.opencode/skills/first-principles-thinking/`).
+> It delegates to the canonical methodology at `~/.agents/skills/first-principles-thinking/SKILL.md`.
 > Format: `.rule.md` with YAML frontmatter (name, description).
 
-Load and follow the full instructions from `~/.agents/skills/first-principles-plan/SKILL.md`.
+Load and follow the full instructions from `~/.agents/skills/first-principles-thinking/SKILL.md`.
 
 This adapter is installed via: `bash install.sh --opencode`
 

@@ -1,15 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 
-# First Principles Plan — Install Script
+# First Principles Thinking — Install Script
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-plan/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash
 #   curl -fsSL ... | bash -s -- --codex        # also set up Codex CLI
 #   curl -fsSL ... | bash -s -- --opencode     # also set up OpenCode
 #   curl -fsSL ... | bash -s -- --all          # set up all detected platforms
 
-REPO_URL="https://github.com/reshiner/first-principles-plan.git"
-INSTALL_DIR="${HOME}/.agents/skills/first-principles-plan"
+REPO_URL="https://github.com/reshiner/first-principles-thinking.git"
+INSTALL_DIR="${HOME}/.agents/skills/first-principles-thinking"
 
 # ── Parse flags ──────────────────────────────────────────────
 INSTALL_CODEX=false
@@ -42,7 +42,7 @@ detect_platform() {
 }
 
 # ── Install / update core skill ──────────────────────────────
-echo "📦 Installing First Principles Plan..."
+echo "📦 Installing First Principles Thinking skill..."
 
 if [ -d "$INSTALL_DIR/.git" ]; then
   echo "  → Updating existing installation..."
@@ -66,7 +66,7 @@ echo "   • Claude Code: auto-discovered (via ~/.agents/skills/)"
 
 # ── Platform: Codex CLI ──────────────────────────────────────
 if [ "$INSTALL_CODEX" = true ]; then
-  CODEX_DIR="${HOME}/.codex/skills/first-principles-plan"
+  CODEX_DIR="${HOME}/.codex/skills/first-principles-thinking"
   echo "  → Linking Codex CLI skill..."
   mkdir -p "$(dirname "$CODEX_DIR")"
   if [ -L "$CODEX_DIR" ] || [ ! -e "$CODEX_DIR" ]; then
@@ -79,7 +79,7 @@ fi
 
 # ── Platform: OpenCode ───────────────────────────────────────
 if [ "$INSTALL_OPENCODE" = true ]; then
-  OPENCODE_DIR="${HOME}/.opencode/skills/first-principles-plan"
+  OPENCODE_DIR="${HOME}/.opencode/skills/first-principles-thinking"
   echo "  → Linking OpenCode skill..."
   mkdir -p "$(dirname "$OPENCODE_DIR")"
   if [ -L "$OPENCODE_DIR" ] || [ ! -e "$OPENCODE_DIR" ]; then
@@ -93,7 +93,7 @@ fi
 # ── Summary ──────────────────────────────────────────────────
 echo ""
 echo "   • SKILL.md  —  Core methodology (auto-loaded by agents scanning ~/.agents/skills/)"
-echo "   • commands/fpp.md  —  /fpp slash command (Claude Code, via adapters/claude/)"
+echo "   • commands/fpt.md  —  /fpt slash command (Claude Code, via adapters/claude/)"
 
 if [ "$INSTALL_CODEX" = true ]; then
   echo "   • adapters/codex/  —  Codex CLI agent definition"
