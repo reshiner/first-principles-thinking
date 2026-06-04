@@ -34,13 +34,6 @@ for arg in "$@"; do
   esac
 done
 
-# ── Detect which platform is running ─────────────────────────
-detect_platform() {
-  # No auto-detection for now — each platform links differently.
-  # The caller explicitly passes --codex or --opencode.
-  echo "agents"
-}
-
 # ── Install / update core skill ──────────────────────────────
 echo "📦 Installing First Principles Thinking skill..."
 
@@ -56,13 +49,90 @@ fi
 echo ""
 echo "✅ Core skill installed at ${INSTALL_DIR}"
 
-# ── Platform: Claude Code ────────────────────────────────────
-# Create symlinks so Claude Code finds commands/ and .claude-plugin/
-# at the standard paths within the skill directory.
-echo "  → Setting up Claude Code discovery paths..."
-ln -sfn adapters/claude/commands "${INSTALL_DIR}/commands"
-ln -sfn adapters/claude/.claude-plugin "${INSTALL_DIR}/.claude-plugin"
-echo "   • Claude Code: auto-discovered (via ~/.agents/skills/)"
+# ── Platform: Claude Code (v2 Plugin Registration) ──────────
+# Since Claude Code 2.x removed ~/.agents/skills/ auto-discovery,
+# we register the skill as a plugin in installed_plugins.json v2.
+echo "  → Registering in Claude Code v2 plugin system..."
+
+PLUGIN_CACHE_DIR="${HOME}/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0"
+
+# Create cache structure: .claude-plugin/plugin.json + skills/ + commands/
+mkdir -p "$PLUGIN_CACHE_DIR/.claude-plugin"
+mkdir -p "$PLUGIN_CACHE_DIR/skills/first-principles-thinking"
+mkdir -p "$PLUGIN_CACHE_DIR/commands"
+
+# Write plugin.json (idempotent)
+cat > "$PLUGIN_CACHE_DIR/.claude-plugin/plugin.json" <<'PLUGINJSON'
+{
+  "name": "first-principles-thinking",
+  "description": "First Principles Thinking — critically evaluate existing code design, design the ideal solution, then reconcile.",
+  "version": "1.0.0",
+  "author": {
+    "name": "reshiner"
+  }
+}
+PLUGINJSON
+
+# Symlink SKILL.md so updates in the repo are reflected live
+ln -sfn "${INSTALL_DIR}/SKILL.md" "$PLUGIN_CACHE_DIR/skills/first-principles-thinking/SKILL.md"
+
+# Write command entry (delegates to skill)
+cat > "$PLUGIN_CACHE_DIR/commands/fpt.md" <<'FPTCMD'
+---
+description: "First Principles Thinking — critically evaluate existing code design, design the ideal solution, then reconcile. / 第一性原理分析 — 批判性评估现有设计，设计理想方案，做出权衡推荐。Use when you want design-quality-first analysis before code changes."
+argument-hint: "Describe the change or feature to analyze / 描述你想要分析的需求或改动"
+allowed-tools: Read, Write, Edit, Bash, Glob
+---
+
+# First Principles Thinking
+
+Load and follow the **first-principles-thinking** skill from this plugin: `skills/first-principles-thinking/SKILL.md`.
+
+## Quick Start
+
+$ARGUMENTS is the user's description of what they want to change. If provided, use it directly as the task. If empty, ask the user what feature or change they want to analyze.
+
+Follow the three-phase process **in order**:
+1. **Phase 1: Decompose** — surface intent, decompose existing code, diagnose design debt
+2. **Phase 2: Design** — clean-sheet design from fundamentals, document the gap
+3. **Phase 3: Reconcile** — compare Path A vs Path B, apply decision framework, produce recommendation
+
+Output the structured `First Principles Analysis` document as specified in the skill.
+FPTCMD
+
+# Register in installed_plugins.json v2 (idempotent)
+INSTALLED_JSON="${HOME}/.claude/plugins/installed_plugins.json"
+TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
+GIT_SHA=$(git -C "$INSTALL_DIR" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+
+if [ -f "$INSTALLED_JSON" ]; then
+  python3 -c "
+import json, os
+
+path = os.path.expanduser('$INSTALLED_JSON')
+with open(path) as f:
+    data = json.load(f)
+
+key = 'first-principles-thinking@reshiner'
+if key not in data.get('plugins', {}):
+    data.setdefault('plugins', {})[key] = [{
+        'scope': 'user',
+        'installPath': '$PLUGIN_CACHE_DIR',
+        'version': '1.0.0',
+        'installedAt': '$TIMESTAMP',
+        'lastUpdated': '$TIMESTAMP',
+        'gitCommitSha': '$GIT_SHA'
+    }]
+    with open(path, 'w') as f:
+        json.dump(data, f, indent=2)
+        f.write('\n')
+    print('   • Registered in installed_plugins.json')
+  "
+  echo "   • Claude Code v2: registered as plugin"
+else
+  echo "   ⚠ Cannot find ${INSTALLED_JSON}. Manual registration required:"
+  echo "      Add an entry 'first-principles-thinking@reshiner' to your installed_plugins.json"
+fi
 
 # ── Platform: Codex CLI ──────────────────────────────────────
 if [ "$INSTALL_CODEX" = true ]; then
@@ -92,8 +162,8 @@ fi
 
 # ── Summary ──────────────────────────────────────────────────
 echo ""
-echo "   • SKILL.md  —  Core methodology (auto-loaded by agents scanning ~/.agents/skills/)"
-echo "   • commands/fpt.md  —  /fpt slash command (Claude Code, via adapters/claude/)"
+echo "   • SKILL.md  —  Core methodology"
+echo "   • commands/fpt.md  —  /fpt slash command (Claude Code v2 plugin system)"
 
 if [ "$INSTALL_CODEX" = true ]; then
   echo "   • adapters/codex/  —  Codex CLI agent definition"

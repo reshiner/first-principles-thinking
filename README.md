@@ -38,7 +38,7 @@ git clone https://github.com/reshiner/first-principles-thinking.git ~/.agents/sk
 
 After installing the core, set up your specific platform:
 
-**Claude Code:** Auto-discovered — no extra steps needed. The skill is loaded from `~/.agents/skills/` automatically. `/fpt` slash command is available via `adapters/claude/commands/fpt.md`.
+**Claude Code (2.x+):** Registered as a plugin via installed_plugins.json v2. The install script handles this automatically — it creates the plugin cache structure at `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` and registers the `/fpt` slash command.
 
 **Codex CLI:**
 ```bash
@@ -119,8 +119,8 @@ doc/fpt/20260603-authentication-module-analysis.md
 │   ├── notification-system-fpt.md
 │   └── payment-checkout-fpt.md
 ├── doc/fpt/                                 # Saved FPT analysis documents
-├── commands -> adapters/claude/commands     # Backward-compat symlink
-├── .claude-plugin -> adapters/claude/.claude-plugin
+│
+├── ... (runtime symlink to SKILL.md via ~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/)
 ├── README.md                                # This file (English)
 ├── README.zh-CN.md                          # Introduction (中文)
 ├── LICENSE                                  # MIT License
