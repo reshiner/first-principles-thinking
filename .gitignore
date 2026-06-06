@@ -13,11 +13,3 @@
 
 # Project-local tracking (not part of distributed skill)
 TODO.md
-
-# Install-time symlinks (created by install.sh for Claude Code discovery)
-.claude-plugin
-commands
-
-# But keep the adapter source copy under version control
-!adapters/claude/.claude-plugin
-!adapters/claude/commands

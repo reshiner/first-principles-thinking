@@ -22,37 +22,54 @@
 
 ## 安装
 
-### 核心（所有平台）
+### Claude Code（推荐）
+
+有两种方式：
+
+**方式 A：Marketplace 安装（最简单，Claude Code v2.24+）**
+
+在 Claude Code 中执行以下命令：
+
+```
+/plugin marketplace add https://github.com/reshiner/first-principles-thinking
+/plugin install first-principles-thinking@reshiner
+```
+
+这会注册 `reshiner` 市场源并安装插件 — Claude Code 自动发现 `/fpt` 斜杠命令和自动触发技能。
+
+**方式 B：安装脚本（所有 Claude Code 版本）**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash
 ```
 
-或手动克隆：
+或手动克隆和运行：
 
 ```bash
 git clone https://github.com/reshiner/first-principles-thinking.git ~/.agents/skills/first-principles-thinking
+~/.agents/skills/first-principles-thinking/install.sh
 ```
 
-### 平台特定设置
+安装脚本会在 `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` 创建插件缓存结构，并注册 `/fpt` 斜杠命令。
 
-安装核心后，配置你的特定平台：
+### Codex CLI
 
-**Claude Code（2.x+）：** 通过 `installed_plugins.json` v2 注册为插件。`install.sh` 脚本会自动执行——它在 `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` 创建插件缓存结构，并将 `/fpt` 斜杠命令注册到 Claude Code。
-
-**Codex CLI：**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash -s -- --codex
 ```
+
 在 `~/.codex/skills/first-principles-thinking/` 创建指向 `adapters/codex/` 的符号链接。
 
-**OpenCode：**
+### OpenCode
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash -s -- --opencode
 ```
+
 在 `~/.opencode/skills/first-principles-thinking/` 创建指向 `adapters/opencode/` 的符号链接。
 
-**一键安装全部：**
+### 一键安装全部
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash -s -- --all
 ```

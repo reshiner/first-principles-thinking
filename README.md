@@ -22,37 +22,56 @@ The skill does **not** always recommend refactoring. It makes the tradeoff **exp
 
 ## Installation
 
-### Core (all platforms)
+Choose your platform below.
+
+### Claude Code (recommended)
+
+You have two options:
+
+**Option A: Marketplace install (easiest, Claude Code v2.24+)**
+
+Run these commands in Claude Code:
+
+```
+/plugin marketplace add https://github.com/reshiner/first-principles-thinking
+/plugin install first-principles-thinking@reshiner
+```
+
+This registers the `reshiner` marketplace and installs the plugin — Claude Code discovers the `/fpt` slash command and auto-triggering skill automatically.
+
+**Option B: Install script (all Claude Code versions)**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash
 ```
 
-Or clone manually:
+Or clone and run manually:
 
 ```bash
 git clone https://github.com/reshiner/first-principles-thinking.git ~/.agents/skills/first-principles-thinking
+~/.agents/skills/first-principles-thinking/install.sh
 ```
 
-### Platform-specific setup
+The install script creates the plugin cache structure at `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` and registers the `/fpt` slash command.
 
-After installing the core, set up your specific platform:
+### Codex CLI
 
-**Claude Code (2.x+):** Registered as a plugin via installed_plugins.json v2. The install script handles this automatically — it creates the plugin cache structure at `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` and registers the `/fpt` slash command.
-
-**Codex CLI:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash -s -- --codex
 ```
+
 This creates a symlink at `~/.codex/skills/first-principles-thinking/` pointing to `adapters/codex/`.
 
-**OpenCode:**
+### OpenCode
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash -s -- --opencode
 ```
+
 This creates a symlink at `~/.opencode/skills/first-principles-thinking/` pointing to `adapters/opencode/`.
 
-**All at once:**
+### All platforms
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/main/install.sh | bash -s -- --all
 ```
@@ -119,8 +138,8 @@ doc/fpt/20260603-authentication-module-analysis.md
 │   ├── notification-system-fpt.md
 │   └── payment-checkout-fpt.md
 ├── doc/fpt/                                 # Saved FPT analysis documents
-│
-├── ... (runtime symlink to SKILL.md via ~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/)
+├── commands/ -> adapters/claude/commands    # `/fpt` slash command (root symlink for marketplace install)
+├── .claude-plugin/ -> adapters/claude/.claude-plugin  # Plugin manifest (root symlink for marketplace install)
 ├── README.md                                # This file (English)
 ├── README.zh-CN.md                          # Introduction (中文)
 ├── LICENSE                                  # MIT License
