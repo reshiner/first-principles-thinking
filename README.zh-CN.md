@@ -38,7 +38,7 @@ git clone https://github.com/reshiner/first-principles-thinking.git ~/.agents/sk
 
 安装核心后，配置你的特定平台：
 
-**Claude Code：** 自动发现——无需额外步骤。技能由 `~/.agents/skills/` 自动加载。`/fpt` 斜杠命令通过 `adapters/claude/commands/fpt.md` 生效。
+**Claude Code（2.x+）：** 通过 `installed_plugins.json` v2 注册为插件。`install.sh` 脚本会自动执行——它在 `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` 创建插件缓存结构，并将 `/fpt` 斜杠命令注册到 Claude Code。
 
 **Codex CLI：**
 ```bash
