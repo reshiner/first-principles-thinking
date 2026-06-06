@@ -48,8 +48,8 @@ curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/
 Or clone and run manually:
 
 ```bash
-git clone https://github.com/reshiner/first-principles-thinking.git ~/.agents/skills/first-principles-thinking
-~/.agents/skills/first-principles-thinking/install.sh
+git clone https://github.com/reshiner/first-principles-thinking.git
+./first-principles-thinking/install.sh
 ```
 
 The install script creates the plugin cache structure at `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` and registers the `/fpt` slash command.

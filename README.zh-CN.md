@@ -46,8 +46,8 @@ curl -fsSL https://raw.githubusercontent.com/reshiner/first-principles-thinking/
 或手动克隆和运行：
 
 ```bash
-git clone https://github.com/reshiner/first-principles-thinking.git ~/.agents/skills/first-principles-thinking
-~/.agents/skills/first-principles-thinking/install.sh
+git clone https://github.com/reshiner/first-principles-thinking.git
+./first-principles-thinking/install.sh
 ```
 
 安装脚本会在 `~/.claude/plugins/cache/reshiner/first-principles-thinking/1.0.0/` 创建插件缓存结构，并注册 `/fpt` 斜杠命令。
