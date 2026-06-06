@@ -6,7 +6,7 @@ allowed-tools: Read, Write, Edit, Bash, Glob
 
 # First Principles Thinking
 
-Read and execute the full instructions from the **first-principles-thinking** skill at `~/.agents/skills/first-principles-thinking/SKILL.md`.
+Load and follow the **first-principles-thinking** skill from this plugin: `skills/first-principles-thinking/SKILL.md`.
 
 ## Quick Start
 

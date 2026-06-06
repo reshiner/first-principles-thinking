@@ -20,3 +20,4 @@ commands
 
 # But keep the adapter source copy under version control
 !adapters/claude/.claude-plugin
+!adapters/claude/commands
